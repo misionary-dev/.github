@@ -1,116 +1,53 @@
-# Governance and Development Standards
+# Estándares de Gobernanza y Desarrollo
 
-## Overview
+## 1. Visión General
+Este documento establece los protocolos técnicos y operativos para todos los proyectos bajo la organización **Misionary**. El objetivo de estos estándares es garantizar despliegues ágiles, seguridad en la infraestructura y alta satisfacción del cliente final.
 
-This document outlines the governance structure and development standards for the Missionary Development organization. All team members are expected to adhere to these policies to maintain code quality, security, and professional standards.
+## 2. Propiedad del Código y Repositorios
+Para asegurar la continuidad operativa y evitar bloqueos de infraestructura (ej. validaciones 2FA de terceros), se establece la siguiente política de alojamiento:
+* **Centralización:** Todos los repositorios de código de clientes deben residir bajo la organización de GitHub `misionary-dev`.
+* **Accesos:** Los permisos se otorgan mediante el principio de menor privilegio, administrados exclusivamente por el Project Lead.
 
-## Branch Protection Policy
+## 3. Entornos y Despliegues (Railway & n8n)
+La infraestructura se gestiona priorizando la automatización y la separación de entornos.
 
-### Main Branch
+### 3.1 Integración y Despliegue Continuo (CI/CD)
+* **Despliegue Automático:** La rama `main` de cada repositorio está conectada directamente a Railway. Todo código fusionado o empujado a `main` activa un despliegue automático a producción.
+* **Separación de Entornos:** Los proyectos deben apuntar a una arquitectura de dos instancias en Railway:
+  1. **Demo (Staging):** Entorno de pruebas y validación manual.
+  2. **Producción:** Entorno estable de cara al cliente.
 
-The `main` branch is production-ready code. Strict rules apply:
+### 3.2 Gestión de Automatizaciones (n8n)
+* Los flujos de trabajo en n8n se gestionan, mantienen y versionan directamente dentro de la instancia de n8n alojada. 
+* No es requisito versionar los archivos `.json` de n8n en repositorios de GitHub, a menos que se destinen a plantillas de código abierto.
 
-1. All changes must be submitted via Pull Request
-2. 2. Minimum of one peer review required before merging
-   3. 3. All commits must be signed with GPG keys
-      4. 4. CI/CD checks must pass
-         5. 5. Linear history is enforced (no merge commits)
-            6. 6. Force pushes are blocked
-              
-               7. ### Development Branches
-              
-               8. Developers should create feature branches from `main`:
-              
-               9. - Branch naming: `feature/description`, `bugfix/description`, `hotfix/description`
-                  - - Each branch should focus on a single feature or fix
-                    - - Regular commits with descriptive messages
-                      - - Keep branches up to date with main
-                       
-                        - ## Code Review Standards
-                       
-                        - ### Pull Request Requirements
-                       
-                        - 1. Clear, descriptive title and description
-                          2. 2. References to related issues or tickets
-                             3. 3. Explanation of changes and rationale
-                                4. 4. Test coverage for new functionality
-                                   5. 5. No commented-out code
-                                     
-                                      6. ### Review Process
-                                     
-                                      7. 1. Assigned reviewers must provide feedback within 24 hours
-                                         2. 2. All conversations must be resolved before merge
-                                            3. 3. Reviewers should test the changes locally if possible
-                                               4. 4. Use suggestion blocks for recommended changes
-                                                  5. 5. Approve only when completely satisfied
-                                                    
-                                                     6. ## Commit Standards
-                                                    
-                                                     7. ### Commit Messages
-                                                    
-                                                     8. All commits must have:
-                                                    
-                                                     9. 1. Clear, descriptive subject line (50 characters or less)
-                                                        2. 2. Blank line after subject
-                                                           3. 3. Detailed explanation if necessary
-                                                              4. 4. References to issues: `Fixes #123` or `Related to #456`
-                                                                
-                                                                 5. ### Commit Signing
-                                                                
-                                                                 6. All commits must be signed with author's GPG key. This verifies authorship and adds security.
-                                                                
-                                                                 7. ## Code Quality
-                                                                
-                                                                 8. ### Standards
-                                                                
-                                                                 9. - Follow language-specific conventions and best practices
-                                                                    - - Maintain consistent code style (enforced by linters)
-                                                                      - - Write self-documenting code with clear variable names
-                                                                        - - Add comments only for complex logic
-                                                                          - - Keep methods and functions focused and small
-                                                                           
-                                                                            - ### Testing
-                                                                           
-                                                                            - - Unit tests for all new functionality
-                                                                              - - Integration tests for multi-component changes
-                                                                                - - Code coverage target: 80%+ for new code
-                                                                                  - - All tests must pass before PR approval
-                                                                                   
-                                                                                    - ## Security Practices
-                                                                                   
-                                                                                    - 1. Never commit secrets or sensitive data
-                                                                                      2. 2. Review dependencies for known vulnerabilities
-                                                                                         3. 3. Use environment variables for configuration
-                                                                                            4. 4. Apply principle of least privilege
-                                                                                               5. 5. Report security issues privately
-                                                                                                 
-                                                                                                  6. ## Release Process
-                                                                                                 
-                                                                                                  7. 1. Version changes follow semantic versioning (MAJOR.MINOR.PATCH)
-                                                                                                     2. 2. Release notes document all changes
-                                                                                                        3. 3. Tags mark releases on main branch
-                                                                                                           4. 4. Deployment follows a checklist
-                                                                                                              5. 5. Post-deployment verification is required
-                                                                                                                
-                                                                                                                 6. ## Dispute Resolution
-                                                                                                                
-                                                                                                                 7. If disagreements arise about code changes:
-                                                                                                                
-                                                                                                                 8. 1. Technical discussions in PR comments
-                                                                                                                    2. 2. Escalate to team lead if unresolved
-                                                                                                                       3. 3. Final decision rests with project lead
-                                                                                                                          4. 4. Document reasoning for future reference
-                                                                                                                            
-                                                                                                                             5. ## Violations and Enforcement
-                                                                                                                            
-                                                                                                                             6. Violations of governance policies may result in:
-                                                                                                                            
-                                                                                                                             7. 1. Request to amend pull requests
-                                                                                                                                2. 2. Temporary merge restrictions
-                                                                                                                                   3. 3. Code review requirements for all future PRs
-                                                                                                                                      4. 4. Review of development practices with team lead
-                                                                                                                                         5. 5. Escalation for repeated or serious violations
-                                                                                                                                           
-                                                                                                                                            6. ## Updates and Changes
-                                                                                                                                           
-                                                                                                                                            7. This governance document is living and may be updated as needed. Changes require discussion and team consensus. Major changes require written approval from organization leadership.
+## 4. Ciclo de Vida del Código y Revisiones
+La calidad del código es una responsabilidad compartida, apoyada por herramientas modernas y revisión cruzada.
+
+* **Revisión de Pares (Cross-Review):** Los desarrollos implementan un modelo de revisión cruzada donde el equipo de Frontend audita integraciones de Backend, y viceversa.
+* **Asistencia de IA:** Se fomenta el uso de herramientas de Inteligencia Artificial para tareas de depuración (debugging) previas a la revisión humana.
+* **Trazabilidad:** Toda tarea o modificación debe estar respaldada por un "Issue" documentado. El ciclo de vida de la tarea finaliza únicamente cuando se cierra el Issue correspondiente.
+
+## 5. Criterios de Aceptación ("Definition of Done")
+Un desarrollo o funcionalidad se considera finalizado ("Done") cuando cumple las siguientes condiciones:
+1. Ha superado la validación manual exhaustiva en el entorno **Demo**.
+2. Ha sido desplegado en **Producción** sin arrojar errores críticos.
+3. El cliente no reporta problemas de usabilidad o funcionalidad.
+*Nota técnica:* Las oportunidades de mejora en el rendimiento (performance) identificadas post-despliegue se documentarán como nueva deuda técnica para futuras iteraciones, asumiendo una mentalidad de mejora continua.
+
+## 6. Seguridad y Gestión de Secretos
+La exposición de credenciales es un riesgo inaceptable.
+* **Variables de Entorno:** Las claves de API (Mercado Pago, Gmail, integraciones) y credenciales de bases de datos deben inyectarse exclusivamente a través de variables de entorno en Railway o n8n.
+* **Control de Acceso:** El acceso a la lectura y modificación de estas variables está restringido únicamente al Project Lead. Queda estrictamente prohibido compartir secretos en repositorios o canales de texto.
+
+## 7. Comunicación y Protocolo de Emergencias
+
+### 7.1 Comunicación Estándar
+* **Asíncrona:** GitHub Issues para el seguimiento técnico.
+* **Síncrona:** Grupo oficial de WhatsApp para la coordinación del equipo.
+
+### 7.2 Resolución de Urgencias (Hotfixes)
+Ante la caída de un sistema en producción (ej. fuera de horario comercial):
+1. **Coordinación Inmediata:** El Project Manager y el desarrollador disponible establecen contacto directo.
+2. **Acción Prioritaria:** Se evaluará la ruta más eficiente para restaurar el servicio: aplicar un parche rápido directo a `main` (Hotfix) o revertir el despliegue a la versión anterior (Rollback) desde el panel de Railway.
+3. **Post-mortem:** Una vez estabilizado el sistema, se documentará el incidente para prevenir futuras ocurrencias.
